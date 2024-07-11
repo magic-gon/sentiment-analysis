@@ -1,0 +1,17 @@
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'functions'
+      - 'deploy'
+      - 'run-query-load-all-obt'  # Function's name
+      - '--source=run-query-load-all-obt'  # Path to function
+      - '--runtime=python310'  # Runtime
+      - '--gen2'  # Gen2
+      - '--trigger-http'
+      - '--region=europe-west3'
+      - '--memory=2GB'  # Increase memory if needed
+      - '--timeout=600s'  # Increase timeout if needed
+      - '--max-instances=3000'
+      - '--service-account=some-service@some-project.iam.gserviceaccount.com'
+      - '--entry-point=run_query_load_all_obt'  # Entry point
+      - '--allow-unauthenticated'

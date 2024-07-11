@@ -1,0 +1,30 @@
+  steps:
+  # Step 1: Build the Docker Image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - 'build'
+      - '-t'
+      - 'gcr.io/some-project/gcf-artifacts:$SHORT_SHA'
+      - '--file'
+      - 'prediction-topic-pipeline/Dockerfile'
+      - 'prediction-topic-pipeline'
+  # Step 2: Push the Image to Google Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/some-project/gcf-artifacts:$SHORT_SHA']
+  # Step 3: Deploy the Image to Google Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'prediction-topic-pipeline'
+      - '--image'
+      - 'gcr.io/some-project/gcf-artifacts:$SHORT_SHA'
+      - '--platform'
+      - 'managed'
+      - '--region'
+      - 'europe-west3'
+      - '--set-env-vars'
+      - 'MODEL_PATH=/app/model'
+      - '--port'
+      - '8080'
+      - '--allow-unauthenticated'
