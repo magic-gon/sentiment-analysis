@@ -1,0 +1,17 @@
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'functions'
+      - 'deploy'
+      - 'prediction-sentiment-pipeline'  # Function's name
+      - '--source=prediction-sentiment-pipeline'  # Path to function
+      - '--runtime=python310'  # Runtime
+      - '--gen2'  # Gen2
+      - '--trigger-http'
+      - '--region=europe-west3'
+      - '--memory=2GB'  # Increase memory if needed
+      - '--timeout=600s'  # Increase timeout if needed
+      - '--max-instances=3000'
+      - '--service-account=some-service@some-project.iam.gserviceaccount.com' # Ensure SA has permissions
+      - '--entry-point=analyze_sentiment_and_merge'  # Entry point
+logsBucket: 'gs://some-bucket/' # Path to logs bucket

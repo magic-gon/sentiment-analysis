@@ -1,0 +1,6 @@
+google-cloud-bigquery
+flask
+google-cloud-language
+google-cloud-logging
+pandas
+pandas-gbq
