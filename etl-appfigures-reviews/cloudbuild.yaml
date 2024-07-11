@@ -1,0 +1,17 @@
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'functions'
+      - 'deploy'
+      - 'appfigures-getreviews'  # Function's name
+      - '--source=etl-appfigures-reviews'  # Path to function
+      - '--runtime=python310'  # Runtime
+      - '--gen2'  # Gen2
+      - '--trigger-http'
+      - '--region=europe-west3'
+      - '--memory=2GB'  # Increase memory if needed
+      - '--timeout=600s'  # Increase timeout if needed
+      - '--max-instances=3000'
+      - '--service-account=some-service@some-project.iam.gserviceaccount.com'
+      - '--entry-point=appfigures_get_reviews'  # Entry point
+logsBucket: 'gs://some-bucket/'

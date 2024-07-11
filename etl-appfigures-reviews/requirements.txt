@@ -1,0 +1,7 @@
+requests_oauthlib
+google-cloud-secretmanager
+pandas
+pandas-gbq
+flask
+google-cloud-logging
+google-cloud-bigquery
